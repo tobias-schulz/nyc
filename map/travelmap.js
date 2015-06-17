@@ -66,8 +66,8 @@ dataArray = dataArray['photos'];
 			var lon = dataArray[i]['location']['longitude'];
 			var geoLocation  = new google.maps.LatLng(lat, lon);
 			var reference_file = dataArray[i]['filename'];
-			var dialog_content = "Location: " + lat + "," + lon + "\n"
-				+ "Timestamp: " + dataArray[i]['timestamp_local'] + " (local), " + dataArray[i]['timestamp_utc'] + " (UTC)" + "\n"
+			var dialog_content = "Location: " + lat + "," + lon + "<br>"
+				+ "Timestamp: " + dataArray[i]['timestamp_local'] + " (local), " + dataArray[i]['timestamp_utc'] + " (UTC)" + "<br>"
 				+ "Filename: " + reference_file;
 			
 			var pixelLocation = projection.fromLatLngToDivPixel( geoLocation );
