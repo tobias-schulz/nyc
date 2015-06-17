@@ -135,7 +135,7 @@ dataArray =
 	});
 	
 	// Make sure to use live because the markers are rendered by javascript after initial DOM load
-	$('.map-point').live('click',function( e ){
+	$('body').on('click', '.map-point', function( e ){
 		$dialog.empty().append($(this).attr('id'));
 		$dialog.dialog('open');
 	});
