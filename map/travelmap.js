@@ -7,6 +7,9 @@
  * @link http://nickjohnson.com/b/
  */
 $(document).ready(function(){
+
+	var geocoder;
+	geocoder = new google.maps.Geocoder();
 	
 	var southWest = new google.maps.LatLng(40.744656,-74.005966); // Los Angeles, CA
 	var northEast = new google.maps.LatLng(34.052234,-118.243685); // New York, NY
@@ -62,7 +65,7 @@ dataArray = dataArray['photos'];
 			var lat = dataArray[i]['location']['latitude'];
 			var lon = dataArray[i]['location']['longitude'];
 			var geoLocation  = new google.maps.LatLng(lat, lon);
-			var reference_file = dataArray[i]['reference_file'];
+			var reference_file = dataArray[i]['filename'];
 			var dialog_content = "Location: " + lat + "," + lon + "\n"
 				+ "Timestamp: " + dataArray[i]['timestamp_local'] + " (local), " + dataArray[i]['timestamp_utc'] + " (UTC)" + "\n"
 				+ "Filename: " + reference_file;
@@ -71,7 +74,7 @@ dataArray = dataArray['photos'];
 
 			var $point = $('<div '
 								+'class="map-point" '
-								+'id="p'+i+'"'
+								+'id="p'+i+'" '
 								+'title="'+i+'" '
 								+'style="'
 									+'width:8px; '
@@ -81,7 +84,9 @@ dataArray = dataArray['photos'];
 									+'position:absolute; '
 									+'cursor:pointer; '
 								+'" '
-								+'data-dialog="'+dialog_content+'"'
+								+'data-dialog="'+dialog_content+'" '
+								+'data-lat="'+lat+'" '
+								+'data-lon="'+lon+'" '
 							+'>'
 								+'<img '
 									+'src="assets/camera-photo.png" '
@@ -144,6 +149,32 @@ dataArray = dataArray['photos'];
 	// Make sure to use live because the markers are rendered by javascript after initial DOM load
 	$('body').on('click', '.map-point', function( e ){
 		$dialog.empty().append($(this).data('dialog'));
-		$dialog.dialog('open');
+		var lat = $(this).data('lat');
+		var lon = $(this).data('lon');
+		geocoder.geocode(
+			{ 'latLng': new google.maps.LatLng(lat, lon) },
+			function (results, status) {
+				var title = "";
+				if (status === google.maps.GeocoderStatus.OK) {
+					if (results[1]) {
+						title = results[0]['formatted_address'];
+					} else {
+						title = 'Unknown address';
+					}
+				} else {
+					title = 'Unknown location';
+				}
+
+				var winW = $(window).width() - 180;
+				var winH = $(window).height() - 180;
+
+				$dialog.dialog({
+					title: title,
+					height: winH,
+					width: winW,
+				});
+				$dialog.dialog('open');
+			}
+		);
 	});
 });
