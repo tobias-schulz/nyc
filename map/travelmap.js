@@ -8,6 +8,8 @@
  */
 $(document).ready(function(){
 
+	var icon_camera_url = "assets/camera-photo.png";
+
 	var geocoder;
 	geocoder = new google.maps.Geocoder();
 	
@@ -65,15 +67,17 @@ dataArray =
 			var lon = dataArray[i]['location']['longitude'];
 			var geoLocation  = new google.maps.LatLng(lat, lon);
 			var reference_file = dataArray[i]['filename'];
-			var thumbnail_base64 = "data:image/jpeg;charset=utf-8;base64," + dataArray[i]['thumbnail_base64'];
+			var thumbnail_url = "thumbnails/" + dataArray[i]['filename']; //"data:image/jpeg;charset=utf-8;base64," + dataArray[i]['thumbnail_base64'];
 			var dialog_content = "Location: " + lat + "," + lon + "<br>"
 				+ "Timestamp: " + dataArray[i]['timestamp_local'] + " (local), " + dataArray[i]['timestamp_utc'] + " (UTC)" + "<br>"
 				+ "Filename: " + reference_file + "<br>"
-				+ "<img src='" + thumbnail_base64 + "'>";
+				+ "<img src='" + thumbnail_url + "'>";
 			
 			var pixelLocation = projection.fromLatLngToDivPixel( geoLocation );
 
-			var $point = $('<div '
+			var icon_url = zoom >= 8 ? thumbnail_url : icon_camera_url;
+
+			var point_html = '<div '
 								+'class="map-point" '
 								+'id="p'+i+'" '
 								+'title="'+i+'" '
@@ -88,13 +92,16 @@ dataArray =
 								+'data-dialog="'+dialog_content+'" '
 								+'data-lat="'+lat+'" '
 								+'data-lon="'+lon+'" '
-								+'data-thumbnail_base64="'+thumbnail_base64+'" '
+								+'data-thumbnail_url="'+thumbnail_url+'" '
 							+'>'
 								+'<img '
-									+'src="assets/camera-photo.png" '
-									+'style="position: absolute; top: -6px; left: -6px" '
+									+'src="' + icon_url + '" '
+									+'style="position: absolute; top: -6px; left: -6px; max-height: 32px;" '
 								+'/>'
-							+'</div>');
+							+'</div>'
+			;
+
+			var $point = $(point_html);
 			
 			// For zoom 8 and closer show a title above the marker icon
 			/*if( zoom >= 8 ){
