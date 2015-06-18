@@ -8,6 +8,8 @@
  */
 $(document).ready(function(){
 
+	if (typeof String.prototype.contains === 'undefined') { String.prototype.contains = function(it) { return this.indexOf(it) != -1; }; }
+
 	var qs = (function(a) {
 	    if (a == "") return {};
 	    var b = {};
@@ -77,7 +79,7 @@ dataArray =
 
 			if (!dataArray[i]['location']) continue;
 
-			if (!qs['all'] && dataArray[i]['filename'].includes("PANO")) continue;
+			if (!qs['all'] && dataArray[i]['filename'].contains("PANO")) continue;
 
 			var lat = dataArray[i]['location']['latitude'];
 			var lon = dataArray[i]['location']['longitude'];
