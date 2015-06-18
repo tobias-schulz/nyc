@@ -79,7 +79,7 @@ dataArray =
 
 			if (!dataArray[i]['location']) continue;
 
-			if (!qs['all'] && dataArray[i]['filename'].contains("PANO")) continue;
+			if (!qs['all'] && !dataArray[i]['filename'].contains("PANO")) continue;
 
 			var lat = dataArray[i]['location']['latitude'];
 			var lon = dataArray[i]['location']['longitude'];
