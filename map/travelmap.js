@@ -8,6 +8,20 @@
  */
 $(document).ready(function(){
 
+	var qs = (function(a) {
+	    if (a == "") return {};
+	    var b = {};
+	    for (var i = 0; i < a.length; ++i)
+	    {
+	        var p=a[i].split('=', 2);
+	        if (p.length == 1)
+	            b[p[0]] = "";
+	        else
+	            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+	    }
+	    return b;
+	})(window.location.search.substr(1).split('&'));
+
 	var icon_camera_url = "assets/camera-photo.png";
 
 	var geocoder;
@@ -63,6 +77,8 @@ dataArray =
 
 			if (!dataArray[i]['location']) continue;
 
+			if (!qs['all'] && dataArray[i]['filename'].includes("PANO")) continue;
+
 			var lat = dataArray[i]['location']['latitude'];
 			var lon = dataArray[i]['location']['longitude'];
 			var geoLocation  = new google.maps.LatLng(lat, lon);
@@ -72,6 +88,7 @@ dataArray =
 				+ "Timestamp: " + dataArray[i]['timestamp_local'] + " (local), " + dataArray[i]['timestamp_utc'] + " (UTC)" + "<br>"
 				+ "Filename: " + reference_file + "<br>"
 				+ "<img src='" + thumbnail_url + "'>";
+			
 			
 			var pixelLocation = projection.fromLatLngToDivPixel( geoLocation );
 
