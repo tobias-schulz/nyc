@@ -24,6 +24,9 @@ $(document).ready(function(){
 	    return b;
 	})(window.location.search.substr(1).split('&'));
 
+	function get_marker_icon_url (n) {
+		return "http://chart.apis.google.com/chart?chst=d_map_spin&chld=1|0|FFF600|15|_|"+n;
+	}
 	var icon_camera_url = "assets/camera-photo.png";
 
 	var geocoder;
@@ -104,7 +107,7 @@ dataArray =
 			
 			var pixelLocation = projection.fromLatLngToDivPixel( geoLocation );
 
-			var icon_url = zoom >= 8 ? thumbnail_url : icon_camera_url;
+			var icon_url = zoom >= 8 ? thumbnail_url : get_marker_icon_url(1);
 
 			var marker = {
 				'pixelLocation': pixelLocation,
@@ -124,7 +127,7 @@ dataArray =
 					found = true;
 					marker2.dialog_content += marker.dialog_content;
 					marker2.count_photos += 1;
-					marker2.icon_url = "http://chart.apis.google.com/chart?chst=d_map_spin&chld=1|0|FFF600|14|_|"+marker2.count_photos;
+					marker2.icon_url = get_marker_icon_url(marker2.count_photos);
 
 				}
 			}
