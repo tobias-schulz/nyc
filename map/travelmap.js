@@ -98,7 +98,8 @@ dataArray =
 				+ "<img src='" + full_url + "'>"
 				+ "<figcaption>"
 				+ "<b>Location:</b> " + lat + "," + lon + "<br>"
-				+ "<b>Timestamp:</b> " + dataArray[i]['timestamp_local'] + " (local), <br>" + dataArray[i]['timestamp_utc'] + " (UTC)" + "<br>"
+				+ "<b>Date:</b> " + dataArray[i]['timestamp_local'] + "<br>"
+				//+ "<b>Timestamp:</b> " + dataArray[i]['timestamp_local'] + " (local), <br>" + dataArray[i]['timestamp_utc'] + " (UTC)" + "<br>"
 				//+ "Filename: " + reference_file + "<br>"
 				+ "</figcaption>"
 				+ "</figure>"
@@ -138,7 +139,7 @@ dataArray =
 					marker2.dialog_content += marker.dialog_content;
 					marker2.count_photos += 1;
 					marker2.icon_url = get_marker_icon_url(marker2.count_photos);
-
+					marker2.icon_url_border_enabled = false;
 				}
 			}
 			if (!found) {
