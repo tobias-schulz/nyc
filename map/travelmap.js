@@ -97,9 +97,9 @@ dataArray =
 				+ "<figure>"
 				+ "<img src='" + full_url + "'>"
 				+ "<figcaption>"
-				+ "Location: " + lat + "," + lon + "<br>"
-				+ "Timestamp: " + dataArray[i]['timestamp_local'] + " (local), " + dataArray[i]['timestamp_utc'] + " (UTC)" + "<br>"
-				+ "Filename: " + reference_file + "<br>"
+				+ "<b>Location:</b> " + lat + "," + lon + "<br>"
+				+ "<b>Timestamp:</b> " + dataArray[i]['timestamp_local'] + " (local), <br>" + dataArray[i]['timestamp_utc'] + " (UTC)" + "<br>"
+				//+ "Filename: " + reference_file + "<br>"
 				+ "</figcaption>"
 				+ "</figure>"
 				+ "</div>";
