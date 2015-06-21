@@ -125,7 +125,7 @@ dataArray =
 				'lon': lon,
 				'thumbnail_url': thumbnail_url,
 				'icon_url': icon_url,
-				'icon_url_border_enabled': icon_url_border_enabled;
+				'icon_url_border_enabled': icon_url_border_enabled,
 				'count_photos': 1,
 			};
 			var found = false;
