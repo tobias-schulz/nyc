@@ -107,7 +107,16 @@ dataArray =
 			
 			var pixelLocation = projection.fromLatLngToDivPixel( geoLocation );
 
-			var icon_url = zoom >= 8 ? thumbnail_url : get_marker_icon_url(1);
+			var icon_url;
+			var icon_url_border_enabled;
+			if (zoom >= 8) {
+				icon_url = thumbnail_url;
+				icon_url_border_enabled = true;
+			}
+			else {
+				icon_url = get_marker_icon_url(1);
+				icon_url_border_enabled = false;
+			}
 
 			var marker = {
 				'pixelLocation': pixelLocation,
@@ -116,6 +125,7 @@ dataArray =
 				'lon': lon,
 				'thumbnail_url': thumbnail_url,
 				'icon_url': icon_url,
+				'icon_url_border_enabled': icon_url_border_enabled;
 				'count_photos': 1,
 			};
 			var found = false;
@@ -140,7 +150,7 @@ dataArray =
 			var marker = markers[i];
 
 			var point_html = '<div '
-								+'class="map-point count_photos-'+marker.count_photos+'" '
+								+'class="map-point icon_url_border_'+(marker.icon_url_border_enabled?"enabled":"disabled")+'" '
 								+'id="p'+i+'" '
 								+'title="'+i+'" '
 								+'style="'
